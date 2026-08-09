@@ -23,6 +23,22 @@ We kept things modern and type-safe:
 
 It takes about two minutes to get everything running.
 
+## Running with Docker (Recommended)
+
+If you have Docker and Docker Compose installed, you can spin up the entire application with a single command:
+
+```bash
+docker-compose up --build
+```
+
+This will automatically build the images, install dependencies, generate the Prisma client, and start both servers. 
+- The **frontend** will be available at `http://localhost:5173`
+- The **backend** API will be running on `http://localhost:5000`
+
+---
+
+## Running Locally (Without Docker)
+
 ### 1. Boot up the Backend
 Open your terminal and navigate to the `backend` folder:
 ```bash
@@ -51,12 +67,12 @@ npm run dev
 
 ## Test Accounts
 
-The seed script creates a few accounts so you can test the Role-Based Access Control right away. The password for all of these is **password123** (except the admin, which is **Admin@123**).
+The seed script creates a few accounts so you can test the Role-Based Access Control right away:
 
-- `admin@fundsroom.com` (Admin)
-- `sales@fundsroom.com` (Sales)
-- `warehouse@fundsroom.com` (Warehouse)
-- `accounts@fundsroom.com` (Accounts)
+- `admin@fundsroom.com` — Password: **Admin@123**
+- `sales@fundsroom.com` — Password: **Sales@123**
+- `warehouse@fundsroom.com` — Password: **Warehouse@123**
+- `accounts@fundsroom.com` — Password: **Accounts@123**
 
 ## Deep Dive Documentation
 

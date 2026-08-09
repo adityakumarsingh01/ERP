@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
-import { Plus, CheckCircle, XCircle } from 'lucide-react';
+import { XCircle } from 'lucide-react';
 import { format } from 'date-fns';
 
 const Challans: React.FC = () => {

@@ -9,7 +9,7 @@ const Customers: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     customerName: '', mobileNumber: '', email: '', businessName: '', 
-    gstNumber: '', customerType: 'RETAIL', status: 'ACTIVE'
+    gstNumber: '', customerType: 'RETAIL', status: 'ACTIVE', address: ''
   });
   
   const { user } = useAuth();

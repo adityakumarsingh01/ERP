@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
-import { LogIn } from 'lucide-react';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');

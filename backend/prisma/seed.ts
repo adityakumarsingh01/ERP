@@ -7,13 +7,11 @@ async function main() {
   console.log('Seeding database...');
 
   // Create Users
-  const passwordHash = await bcrypt.hash('password123', 10);
-
   const users = [
-    { email: 'admin@fundsroom.com', name: 'Admin User', role: 'ADMIN', passwordHash },
-    { email: 'sales@fundsroom.com', name: 'Sales Rep', role: 'SALES', passwordHash },
-    { email: 'warehouse@fundsroom.com', name: 'Warehouse Manager', role: 'WAREHOUSE', passwordHash },
-    { email: 'accounts@fundsroom.com', name: 'Accountant', role: 'ACCOUNTS', passwordHash }
+    { email: 'admin@fundsroom.com', name: 'Admin User', role: 'ADMIN', passwordHash: await bcrypt.hash('Admin@123', 10) },
+    { email: 'sales@fundsroom.com', name: 'Sales Rep', role: 'SALES', passwordHash: await bcrypt.hash('Sales@123', 10) },
+    { email: 'warehouse@fundsroom.com', name: 'Warehouse Manager', role: 'WAREHOUSE', passwordHash: await bcrypt.hash('Warehouse@123', 10) },
+    { email: 'accounts@fundsroom.com', name: 'Accountant', role: 'ACCOUNTS', passwordHash: await bcrypt.hash('Accounts@123', 10) }
   ];
 
   for (const u of users) {
@@ -24,11 +22,7 @@ async function main() {
     });
   }
 
-  // Update admin password exactly as requested
-  await prisma.user.update({
-    where: { email: 'admin@fundsroom.com' },
-    data: { passwordHash: await bcrypt.hash('Admin@123', 10) }
-  });
+
 
   // Create Customers
   const customer1 = await prisma.customer.create({

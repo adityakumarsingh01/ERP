@@ -1,57 +1,63 @@
-# FundsRoom Mini ERP + CRM Operations Portal
+# FundsRoom Mini ERP & CRM Portal
 
-## Overview
-This is a comprehensive full-stack Mini ERP and CRM portal built for a wholesale/distribution company. It manages customers, products, inventory, and a complete Sales Challan workflow with strict stock management business logic.
+Hey there! Welcome to the repository for the FundsRoom Mini ERP and CRM portal. This project was built to handle the core operations of a wholesale/distribution business—tracking inventory, managing customers, and processing sales challans with strict stock validations.
 
-## Features
-- **Role-Based Access Control**: ADMIN, SALES, WAREHOUSE, ACCOUNTS roles with specific permissions.
-- **Customer CRM**: Manage customers, contact details, and follow-up history.
-- **Product & Inventory**: Track products, SKUs, pricing, and view low-stock alerts on the dashboard.
-- **Sales Challans**: Create draft challans and confirm them.
-- **Stock Validation Transaction**: Confirming a challan executes a database transaction that verifies stock, rejects if insufficient, reduces stock, creates a stock movement log, and updates the challan status.
+We've split the project into a robust Node.js/Express backend and a modern React/Vite frontend. 
 
-## Technology Stack
-- **Frontend**: React, Vite, TypeScript, Tailwind CSS, React Router, React Query, Axios, Lucide Icons.
-- **Backend**: Node.js, Express.js, TypeScript, Prisma ORM, JSON Web Tokens (JWT), bcrypt.
-- **Database**: SQLite (Configured to mock PostgreSQL for local offline testing).
+## What does this do?
 
-## Local Setup
+At a high level, this system solves a few key operational problems:
+- **Role-Based Access**: Not everyone needs to see everything. The app locks down views and APIs based on whether you're an Admin, Sales Rep, Warehouse Manager, or Accountant.
+- **Customer CRM**: A central place to keep track of clients (retailers, wholesalers, distributors) and their contact info.
+- **Inventory Management**: Real-time tracking of product stock. You can see what's running low instantly on the dashboard.
+- **Sales Challans (Delivery Orders)**: The core workflow. Sales reps can draft challans, but the magic happens on confirmation: the backend runs a strict database transaction to ensure we actually have the stock before deducting it and finalizing the order.
 
-### 1. Prerequisites
-- Node.js (v18+)
-- npm
+## Tech Stack
 
-### 2. Backend Setup
+We kept things modern and type-safe:
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS (for that clean, snappy UI), React Router, and Tanstack Query (React Query) for smooth data fetching.
+- **Backend**: Node.js, Express, TypeScript, and Prisma ORM.
+- **Database**: We're currently using SQLite out-of-the-box so you can clone and run this instantly without setting up a Postgres server. Prisma makes it trivial to swap to PostgreSQL for production later.
+
+## Getting Started Locally
+
+It takes about two minutes to get everything running.
+
+### 1. Boot up the Backend
+Open your terminal and navigate to the `backend` folder:
 ```bash
 cd backend
 npm install
+```
+Next, push the database schema and seed it with our test data:
+```bash
 npx prisma db push
 npx prisma db seed
+```
+Finally, start the dev server:
+```bash
 npm run dev
 ```
-The backend will run on `http://localhost:5000`.
+*The API is now listening on `http://localhost:5000`.*
 
-### 3. Frontend Setup
+### 2. Boot up the Frontend
+Open a new terminal tab and go to the `frontend` folder:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-The frontend will run on `http://localhost:5173`.
+*The app is now running on `http://localhost:5173`.*
 
-## Demo Credentials
-The database seed script automatically provisions these accounts:
-- **Admin**: admin@fundsroom.com / Admin@123
-- **Sales**: sales@fundsroom.com / Sales@123
-- **Warehouse**: warehouse@fundsroom.com / Warehouse@123
-- **Accounts**: accounts@fundsroom.com / Accounts@123
+## Test Accounts
 
-## Known Limitations
-- The database is currently running on SQLite for immediate local execution without external dependencies. In production, change the Prisma provider to `postgresql` and update the `DATABASE_URL`.
-- Product snapshots in Challan items are implemented in the API but the full historical view UI is simplified.
-- Cancel functionality for Challans exists in the API but is omitted from the UI to prioritize core flows.
+The seed script creates a few accounts so you can test the Role-Based Access Control right away. The password for all of these is **password123** (except the admin, which is **Admin@123**).
 
-## Architecture
-```
-User -> React (Vite) -> Axios -> Express API -> Prisma ORM -> SQLite Database
-```
+- `admin@fundsroom.com` (Admin)
+- `sales@fundsroom.com` (Sales)
+- `warehouse@fundsroom.com` (Warehouse)
+- `accounts@fundsroom.com` (Accounts)
+
+## Deep Dive Documentation
+
+If you want to understand the architecture, database schema, or how the transactional logic works under the hood, check out the markdown files in the `/Documentation` folder!

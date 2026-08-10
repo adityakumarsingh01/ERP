@@ -17,7 +17,7 @@ async function main() {
   for (const u of users) {
     await prisma.user.upsert({
       where: { email: u.email },
-      update: {},
+      update: { passwordHash: u.passwordHash },
       create: u,
     });
   }
@@ -25,21 +25,26 @@ async function main() {
 
 
   // Create Customers
-  const customer1 = await prisma.customer.create({
-    data: {
-      customerName: 'ABC Traders',
-      mobileNumber: '9876543210',
-      email: 'contact@abctraders.com',
-      businessName: 'ABC Traders Pvt Ltd',
-      customerType: 'WHOLESALE',
-      status: 'ACTIVE',
-      address: 'Mumbai, Maharashtra',
-    }
-  });
+  let customer1 = await prisma.customer.findFirst({ where: { email: 'contact@abctraders.com' } });
+  if (!customer1) {
+    customer1 = await prisma.customer.create({
+      data: {
+        customerName: 'ABC Traders',
+        mobileNumber: '9876543210',
+        email: 'contact@abctraders.com',
+        businessName: 'ABC Traders Pvt Ltd',
+        customerType: 'WHOLESALE',
+        status: 'ACTIVE',
+        address: 'Mumbai, Maharashtra',
+      }
+    });
+  }
 
   // Create Products
-  const product1 = await prisma.product.create({
-    data: {
+  const product1 = await prisma.product.upsert({
+    where: { sku: 'LAP-001' },
+    update: {},
+    create: {
       name: 'Laptop',
       sku: 'LAP-001',
       category: 'Electronics',
